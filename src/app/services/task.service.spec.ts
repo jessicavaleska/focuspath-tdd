@@ -29,4 +29,35 @@ describe('TaskService', () => {
     expect(tasks.length).toBe(1);
     expect(tasks[0]).toEqual(task);
   });
+
+  it('should update a task and set updatedAt, keeping createdAt unchanged', () => {
+    const createdAt = new Date();
+
+    const task: Task = {
+      id: 1,
+      title: 'Study Angular',
+      completed: false,
+      createdAt
+    };
+
+    service.addTask(task);
+
+    const updatedTask: Task = {
+      id: 1,
+      title: 'Study Angular with TDD',
+      completed: true,
+      createdAt,
+      updatedAt: new Date()
+    };
+
+    service.editTask(updatedTask);
+
+    const tasks = service.getTasks();
+    expect(tasks.length).toBe(1);
+    expect(tasks[0].id).toBe(1);
+    expect(tasks[0].title).toBe('Study Angular with TDD');
+    expect(tasks[0].completed).toBe(true);
+    expect(tasks[0].createdAt).toEqual(createdAt);
+    expect(tasks[0].updatedAt).toBeTruthy();
+  });
 });
