@@ -30,4 +30,12 @@ export class TaskService {
       return task;
     });
   }
+
+  deleteTask(taskId: number): void {
+    this.tasks = this.tasks.filter(task => this.shouldKeepTask(task, taskId));
+  }
+
+  private shouldKeepTask(task: Task, taskIdToDelete: number): boolean {
+    return task.id !== taskIdToDelete;
+  }
 }
