@@ -60,4 +60,31 @@ describe('TaskService', () => {
     expect(tasks[0].createdAt).toEqual(createdAt);
     expect(tasks[0].updatedAt).toBeTruthy();
   });
+
+  it('should delete a task by its id', () => {
+    const task1: Task = {
+      id: 1,
+      title: 'Study Angular',
+      completed: false,
+      createdAt: new Date()
+    };
+
+    const task2: Task = {
+      id: 2,
+      title: 'Practice TDD',
+      completed: false,
+      createdAt: new Date()
+    };
+
+    service.addTask(task1);
+    service.addTask(task2);
+
+    let tasks = service.getTasks();
+    expect(tasks.length).toBe(2);
+
+    service.deleteTask(1);
+    tasks = service.getTasks();
+    expect(tasks.length).toBe(1);
+    expect(tasks[0].id).toBe(2);
+  });
 });
