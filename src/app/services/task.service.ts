@@ -42,13 +42,17 @@ export class TaskService {
   toggleCompleted(taskId: number): void {
     this.tasks = this.tasks.map(task => {
       if (task.id === taskId) {
-        return {
-          ...task,
-          completed: !task.completed,
-          updatedAt: new Date()
-        };
+        return this.toggleTaskCompleted(task);
       }
       return task;
     });
+  }
+
+  private toggleTaskCompleted(task: Task): Task {
+    return {
+      ...task,
+      completed: !task.completed,
+      updatedAt: new Date()
+    };
   }
 }
