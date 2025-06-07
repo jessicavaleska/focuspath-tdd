@@ -106,8 +106,8 @@ describe('TaskService', () => {
     expect(tasks.length).toBe(1);
     expect(tasks[0].completed).toBe(true);
     expect(tasks[0].updatedAt).toBeTruthy();
-
-    const updatedAtAfterFirstToggle = tasks[0].updatedAt;
+    
+    const updatedAtAfterFirstToggle = tasks[0].updatedAt ? tasks[0].updatedAt.getTime() : 0;
 
     service.toggleCompleted(1);
 
@@ -115,6 +115,6 @@ describe('TaskService', () => {
     expect(tasks.length).toBe(1);
     expect(tasks[0].completed).toBe(false);
     expect(tasks[0].updatedAt).toBeTruthy();
-    expect(tasks[0].updatedAt).not.toEqual(updatedAtAfterFirstToggle);
+    expect(tasks[0].updatedAt!.getTime()).toBeGreaterThan(updatedAtAfterFirstToggle);
   });
 });
