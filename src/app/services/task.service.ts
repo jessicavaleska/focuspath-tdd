@@ -12,8 +12,22 @@ export class TaskService {
   addTask(task: Task): void {
     this.tasks.push(task);
   }
-  
+
   getTasks(): Task[] {
     return this.tasks;
+  }
+
+  editTask(updatedTask: Task): void {
+    this.tasks = this.tasks.map(task => {
+      if (task.id === updatedTask.id) {
+        return {
+          ...task,
+          title: updatedTask.title,
+          completed: updatedTask.completed,
+          updatedAt: new Date()
+        };
+      }
+      return task;
+    });
   }
 }
