@@ -87,4 +87,34 @@ describe('TaskService', () => {
     expect(tasks.length).toBe(1);
     expect(tasks[0].id).toBe(2);
   });
+
+  it('should toggle the completed status of a task and update updatedAt', () => {
+    const createdAt = new Date();
+
+    const task: Task = {
+      id: 1,
+      title: 'Study Angular',
+      completed: false,
+      createdAt
+    };
+
+    service.addTask(task);
+
+    service.toggleCompleted(1);
+
+    let tasks = service.getTasks();
+    expect(tasks.length).toBe(1);
+    expect(tasks[0].completed).toBe(true);
+    expect(tasks[0].updatedAt).toBeTruthy();
+
+    const updatedAtAfterFirstToggle = tasks[0].updatedAt;
+
+    service.toggleCompleted(1);
+
+    tasks = service.getTasks();
+    expect(tasks.length).toBe(1);
+    expect(tasks[0].completed).toBe(false);
+    expect(tasks[0].updatedAt).toBeTruthy();
+    expect(tasks[0].updatedAt).not.toEqual(updatedAtAfterFirstToggle);
+  });
 });
