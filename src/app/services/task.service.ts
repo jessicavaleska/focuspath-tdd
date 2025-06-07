@@ -38,4 +38,17 @@ export class TaskService {
   private shouldKeepTask(task: Task, taskIdToDelete: number): boolean {
     return task.id !== taskIdToDelete;
   }
+
+  toggleCompleted(taskId: number): void {
+    this.tasks = this.tasks.map(task => {
+      if (task.id === taskId) {
+        return {
+          ...task,
+          completed: !task.completed,
+          updatedAt: new Date()
+        };
+      }
+      return task;
+    });
+  }
 }
