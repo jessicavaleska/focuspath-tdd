@@ -91,4 +91,9 @@ export class TaskService {
       updatedAt: task.updatedAt ? new Date(task.updatedAt) : undefined
     }));
   }
+
+  clearTasksStorage(): void {
+    localStorage.removeItem('tasks');
+    this.tasks = [];
+  }
 }
