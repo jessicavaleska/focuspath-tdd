@@ -67,20 +67,28 @@ export class TaskService {
   }
 
   saveTasksToStorage(): void {
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    localStorage.setItem('tasks', this.serializeTasks());
   }
 
   loadTasksFromStorage(): void {
     const tasksJson = localStorage.getItem('tasks');
     if (tasksJson) {
-      const tasksData = JSON.parse(tasksJson);
-      this.tasks = tasksData.map((task: any) => ({
-        ...task,
-        createdAt: new Date(task.createdAt),
-        updatedAt: task.updatedAt ? new Date(task.updatedAt) : undefined
-      }));
+      this.tasks = this.deserializeTasks(tasksJson);
     } else {
       this.tasks = [];
     }
+  }
+
+  private serializeTasks(): string {
+    return JSON.stringify(this.tasks);
+  }
+
+  private deserializeTasks(tasksJson: string): Task[] {
+    const tasksData = JSON.parse(tasksJson);
+    return tasksData.map((task: any) => ({
+      ...task,
+      createdAt: new Date(task.createdAt),
+      updatedAt: task.updatedAt ? new Date(task.updatedAt) : undefined
+    }));
   }
 }
