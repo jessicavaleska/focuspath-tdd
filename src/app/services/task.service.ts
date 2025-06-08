@@ -57,18 +57,12 @@ export class TaskService {
   }
 
   filterTasks(filter: 'all' | 'completed' | 'pending'): Task[] {
-    return this.tasks.filter(task => this.shouldIncludeTask(task, filter));
-  }
+    const filterMap: Record<'all' | 'completed' | 'pending', (task: Task) => boolean> = {
+      all: () => true,
+      completed: (task) => task.completed,
+      pending: (task) => !task.completed
+    };
 
-  private shouldIncludeTask(task: Task, filter: 'all' | 'completed' | 'pending'): boolean {
-    switch (filter) {
-      case 'completed':
-        return task.completed;
-      case 'pending':
-        return !task.completed;
-      case 'all':
-      default:
-        return true;
-    }
+    return this.tasks.filter(filterMap[filter] ?? filterMap['all']);
   }
 }
