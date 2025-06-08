@@ -65,4 +65,22 @@ export class TaskService {
 
     return this.tasks.filter(filterMap[filter] ?? filterMap['all']);
   }
+
+  saveTasksToStorage(): void {
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+  }
+
+  loadTasksFromStorage(): void {
+    const tasksJson = localStorage.getItem('tasks');
+    if (tasksJson) {
+      const tasksData = JSON.parse(tasksJson);
+      this.tasks = tasksData.map((task: any) => ({
+        ...task,
+        createdAt: new Date(task.createdAt),
+        updatedAt: task.updatedAt ? new Date(task.updatedAt) : undefined
+      }));
+    } else {
+      this.tasks = [];
+    }
+  }
 }
