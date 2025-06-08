@@ -241,4 +241,13 @@ describe('TaskService', () => {
     expect(tasks[0].id).toBe(1);
     expect(tasks[1].completed).toBe(true);
   });
+
+  it('should clear tasks from LocalStorage when clearTasksStorage is called', () => {
+    spyOn(localStorage, 'removeItem');
+
+    service.clearTasksStorage();
+
+    expect(localStorage.removeItem).toHaveBeenCalledWith('tasks');
+    expect(service.getTasks().length).toBe(0);
+  });
 });
