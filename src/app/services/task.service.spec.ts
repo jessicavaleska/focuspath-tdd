@@ -117,4 +117,72 @@ describe('TaskService', () => {
     expect(tasks[0].updatedAt).toBeTruthy();
     expect(tasks[0].updatedAt!.getTime()).toBeGreaterThanOrEqual(updatedAtAfterFirstToggle);
   });
+
+  it('should return all tasks when filter is "all"', () => {
+    const task1: Task = {
+      id: 1,
+      title: 'Task 1',
+      completed: false,
+      createdAt: new Date()
+    };
+
+    const task2: Task = {
+      id: 2,
+      title: 'Task 2',
+      completed: true,
+      createdAt: new Date()
+    };
+
+    service.addTask(task1);
+    service.addTask(task2);
+
+    const filteredTasks = service.filterTasks('all');
+    expect(filteredTasks.length).toBe(2);
+  });
+
+  it('should return only completed tasks when filter is "completed"', () => {
+    const task1: Task = {
+      id: 1,
+      title: 'Task 1',
+      completed: false,
+      createdAt: new Date()
+    };
+
+    const task2: Task = {
+      id: 2,
+      title: 'Task 2',
+      completed: true,
+      createdAt: new Date()
+    };
+
+    service.addTask(task1);
+    service.addTask(task2);
+
+    const filteredTasks = service.filterTasks('completed');
+    expect(filteredTasks.length).toBe(1);
+    expect(filteredTasks[0].completed).toBe(true);
+  });
+
+  it('should return only pending tasks when filter is "pending"', () => {
+    const task1: Task = {
+      id: 1,
+      title: 'Task 1',
+      completed: false,
+      createdAt: new Date()
+    };
+
+    const task2: Task = {
+      id: 2,
+      title: 'Task 2',
+      completed: true,
+      createdAt: new Date()
+    };
+
+    service.addTask(task1);
+    service.addTask(task2);
+
+    const filteredTasks = service.filterTasks('pending');
+    expect(filteredTasks.length).toBe(1);
+    expect(filteredTasks[0].completed).toBe(false);
+  });
 });
