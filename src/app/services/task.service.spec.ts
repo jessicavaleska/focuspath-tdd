@@ -185,4 +185,60 @@ describe('TaskService', () => {
     expect(filteredTasks.length).toBe(1);
     expect(filteredTasks[0].completed).toBe(false);
   });
+
+  it('should save tasks to LocalStorage when saveTasksToStorage is called', () => {
+    const task1: Task = {
+      id: 1,
+      title: 'Task 1',
+      completed: false,
+      createdAt: new Date()
+    };
+
+    const task2: Task = {
+      id: 2,
+      title: 'Task 2',
+      completed: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    service.addTask(task1);
+    service.addTask(task2);
+
+    spyOn(localStorage, 'setItem');
+
+    service.saveTasksToStorage();
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'tasks',
+      jasmine.any(String)
+    );
+  });
+
+  it('should load tasks from LocalStorage when loadTasksFromStorage is called', () => {
+    const storedTasks = [
+      {
+        id: 1,
+        title: 'Task 1',
+        completed: false,
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: 2,
+        title: 'Task 2',
+        completed: true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+    ];
+
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify(storedTasks));
+
+    service.loadTasksFromStorage();
+
+    const tasks = service.getTasks();
+    expect(tasks.length).toBe(2);
+    expect(tasks[0].id).toBe(1);
+    expect(tasks[1].completed).toBe(true);
+  });
 });
