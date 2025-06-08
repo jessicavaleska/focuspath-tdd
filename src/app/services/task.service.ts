@@ -55,4 +55,16 @@ export class TaskService {
       updatedAt: new Date()
     };
   }
+
+  filterTasks(filter: 'all' | 'completed' | 'pending'): Task[] {
+    switch (filter) {
+      case 'completed':
+        return this.tasks.filter(task => task.completed);
+      case 'pending':
+        return this.tasks.filter(task => !task.completed);
+      case 'all':
+      default:
+        return this.tasks;
+    }
+  }
 }
