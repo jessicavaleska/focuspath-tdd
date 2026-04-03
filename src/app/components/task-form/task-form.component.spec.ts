@@ -37,4 +37,13 @@ describe('TaskFormComponent', () => {
 
     expect(component.taskAdded.emit).toHaveBeenCalledWith('Estudar TDD');
   });
+
+  it('should clear the input after adding a valid task', () => {
+    spyOn(component.taskAdded, 'emit');
+
+    component.title = 'Nova tarefa';
+    component.submitTask();
+
+    expect(component.title).toBe('');
+  });
 });
