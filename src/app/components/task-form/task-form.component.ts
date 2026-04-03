@@ -20,5 +20,6 @@ export class TaskFormComponent {
     }
 
     this.taskAdded.emit(trimmedTitle);
+    this.title = '';
   }
 }
