@@ -28,4 +28,13 @@ describe('TaskFormComponent', () => {
 
     expect(component.taskAdded.emit).not.toHaveBeenCalled();
   });
+
+  it('should emit taskAdded with trimmed title when title is valid', () => {
+    spyOn(component.taskAdded, 'emit');
+
+    component.title = '  Estudar TDD  ';
+    component.submitTask();
+
+    expect(component.taskAdded.emit).toHaveBeenCalledWith('Estudar TDD');
+  });
 });
