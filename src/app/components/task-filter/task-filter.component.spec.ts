@@ -23,4 +23,28 @@ describe('TaskFilterComponent', () => {
 
     expect(component.filterChanged.emit).toHaveBeenCalledWith('all');
   });
+
+  it('should emit completed filter when completed button is clicked', () => {
+    spyOn(component.filterChanged, 'emit');
+
+    const buttons = fixture.nativeElement.querySelectorAll('button');
+    buttons[1].click();
+
+    expect(component.filterChanged.emit).toHaveBeenCalledWith('completed');
+  });
+
+  it('should emit pending filter when pending button is clicked', () => {
+    spyOn(component.filterChanged, 'emit');
+
+    const buttons = fixture.nativeElement.querySelectorAll('button');
+    buttons[2].click();
+
+    expect(component.filterChanged.emit).toHaveBeenCalledWith('pending');
+  });
+
+  it('should update activeFilter when a filter is selected', () => {
+    component.selectFilter('completed');
+
+    expect(component.activeFilter).toBe('completed');
+  });
 });
