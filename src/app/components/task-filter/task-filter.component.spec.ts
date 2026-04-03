@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TaskFilterComponent } from './task-filter.component';
 
 describe('TaskFilterComponent', () => {
@@ -9,15 +8,19 @@ describe('TaskFilterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskFilterComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TaskFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should emit all filter when all button is clicked', () => {
+    spyOn(component.filterChanged, 'emit');
+
+    const buttons = fixture.nativeElement.querySelectorAll('button');
+    buttons[0].click();
+
+    expect(component.filterChanged.emit).toHaveBeenCalledWith('all');
   });
 });
