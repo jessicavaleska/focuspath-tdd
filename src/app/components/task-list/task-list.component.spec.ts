@@ -20,4 +20,16 @@ describe('TaskListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render the correct number of tasks', () => {
+    component.tasks = [
+      { id: 1, title: 'Tarefa 1', completed: false, createdAt: new Date(), updatedAt: null },
+      { id: 2, title: 'Tarefa 2', completed: true, createdAt: new Date(), updatedAt: null }
+    ];
+
+    fixture.detectChanges();
+
+    const items = fixture.nativeElement.querySelectorAll('li');
+    expect(items.length).toBe(2);
+  });
 });
