@@ -32,4 +32,19 @@ describe('TaskListComponent', () => {
     const items = fixture.nativeElement.querySelectorAll('li');
     expect(items.length).toBe(2);
   });
+
+  it('should emit taskDeleted when delete button is clicked', () => {
+    spyOn(component.taskDeleted, 'emit');
+
+    component.tasks = [
+      { id: 1, title: 'Tarefa 1', completed: false, createdAt: new Date(), updatedAt: null }
+    ];
+
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    button.click();
+
+    expect(component.taskDeleted.emit).toHaveBeenCalledWith(1);
+  });
 });
