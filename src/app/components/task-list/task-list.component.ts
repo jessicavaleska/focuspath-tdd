@@ -11,8 +11,13 @@ export class TaskListComponent {
   @Input() tasks: any[] = [];
   
   @Output() taskDeleted = new EventEmitter<number>();
+  @Output() taskToggled = new EventEmitter<number>();
 
   deleteTask(id: number): void {
     this.taskDeleted.emit(id);
+  }
+
+  toggleTask(id: number): void {
+    this.taskToggled.emit(id);
   }
 }
