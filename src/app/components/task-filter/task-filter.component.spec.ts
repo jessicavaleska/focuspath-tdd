@@ -47,4 +47,12 @@ describe('TaskFilterComponent', () => {
 
     expect(component.activeFilter).toBe('completed');
   });
+
+  it('should apply active state to selected filter button', () => {
+    component.selectFilter('pending');
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll('button');
+    expect(buttons[2].classList).toContain('active');
+  });
 });
