@@ -9,8 +9,7 @@ describe('TaskFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskFormComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TaskFormComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,14 @@ describe('TaskFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not emit taskAdded when title is empty', () => {
+    spyOn(component.taskAdded, 'emit');
+
+    component.title = '   ';
+    component.submitTask();
+
+    expect(component.taskAdded.emit).not.toHaveBeenCalled();
   });
 });
