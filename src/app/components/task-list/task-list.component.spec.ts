@@ -47,4 +47,19 @@ describe('TaskListComponent', () => {
 
     expect(component.taskDeleted.emit).toHaveBeenCalledWith(1);
   });
+
+  it('should emit taskToggled when checkbox is changed', () => {
+    spyOn(component.taskToggled, 'emit');
+
+    component.tasks = [
+      { id: 1, title: 'Tarefa 1', completed: false, createdAt: new Date(), updatedAt: null }
+    ];
+
+    fixture.detectChanges();
+
+    const checkbox = fixture.nativeElement.querySelector('input');
+    checkbox.dispatchEvent(new Event('change'));
+
+    expect(component.taskToggled.emit).toHaveBeenCalledWith(1);
+  });
 });
