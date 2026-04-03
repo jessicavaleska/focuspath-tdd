@@ -62,4 +62,55 @@ describe('TaskListComponent', () => {
 
     expect(component.taskToggled.emit).toHaveBeenCalledWith(1);
   });
+
+  it('should display task titles', () => {
+    component.tasks = [
+      {
+        id: 1,
+        title: 'Estudar TDD',
+        completed: false,
+        createdAt: new Date(),
+        updatedAt: null
+      },
+      {
+        id: 2,
+        title: 'Configurar CI/CD',
+        completed: true,
+        createdAt: new Date(),
+        updatedAt: null
+      }
+    ];
+
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('Estudar TDD');
+    expect(text).toContain('Configurar CI/CD');
+  });
+
+  it('should mark completed task checkbox as checked', () => {
+    component.tasks = [
+      {
+        id: 1,
+        title: 'Estudar TDD',
+        completed: false,
+        createdAt: new Date(),
+        updatedAt: null
+      },
+      {
+        id: 2,
+        title: 'Configurar CI/CD',
+        completed: true,
+        createdAt: new Date(),
+        updatedAt: null
+      }
+    ];
+
+    fixture.detectChanges();
+
+    const checkboxes = fixture.nativeElement.querySelectorAll('input[type="checkbox"]');
+
+    expect(checkboxes[0].checked).toBeFalse();
+    expect(checkboxes[1].checked).toBeTrue();
+  });
 });
