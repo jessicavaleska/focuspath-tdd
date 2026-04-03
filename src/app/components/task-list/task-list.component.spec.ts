@@ -1,10 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskListComponent } from './task-list.component';
+import { Task } from '../../models/task.model';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
   let fixture: ComponentFixture<TaskListComponent>;
+
+  const mockTasks: Task[] = [
+    {
+      id: 1,
+      title: 'Estudar TDD',
+      completed: false,
+      createdAt: new Date(),
+      updatedAt: null
+    },
+    {
+      id: 2,
+      title: 'Configurar CI/CD',
+      completed: true,
+      createdAt: new Date(),
+      updatedAt: null
+    }
+  ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,6 +32,7 @@ describe('TaskListComponent', () => {
 
     fixture = TestBed.createComponent(TaskListComponent);
     component = fixture.componentInstance;
+    component.tasks = mockTasks;
     fixture.detectChanges();
   });
 
@@ -22,11 +41,6 @@ describe('TaskListComponent', () => {
   });
 
   it('should render the correct number of tasks', () => {
-    component.tasks = [
-      { id: 1, title: 'Tarefa 1', completed: false, createdAt: new Date(), updatedAt: null },
-      { id: 2, title: 'Tarefa 2', completed: true, createdAt: new Date(), updatedAt: null }
-    ];
-
     fixture.detectChanges();
 
     const items = fixture.nativeElement.querySelectorAll('li');
@@ -35,10 +49,6 @@ describe('TaskListComponent', () => {
 
   it('should emit taskDeleted when delete button is clicked', () => {
     spyOn(component.taskDeleted, 'emit');
-
-    component.tasks = [
-      { id: 1, title: 'Tarefa 1', completed: false, createdAt: new Date(), updatedAt: null }
-    ];
 
     fixture.detectChanges();
 
@@ -51,10 +61,6 @@ describe('TaskListComponent', () => {
   it('should emit taskToggled when checkbox is changed', () => {
     spyOn(component.taskToggled, 'emit');
 
-    component.tasks = [
-      { id: 1, title: 'Tarefa 1', completed: false, createdAt: new Date(), updatedAt: null }
-    ];
-
     fixture.detectChanges();
 
     const checkbox = fixture.nativeElement.querySelector('input');
@@ -64,23 +70,6 @@ describe('TaskListComponent', () => {
   });
 
   it('should display task titles', () => {
-    component.tasks = [
-      {
-        id: 1,
-        title: 'Estudar TDD',
-        completed: false,
-        createdAt: new Date(),
-        updatedAt: null
-      },
-      {
-        id: 2,
-        title: 'Configurar CI/CD',
-        completed: true,
-        createdAt: new Date(),
-        updatedAt: null
-      }
-    ];
-
     fixture.detectChanges();
 
     const text = fixture.nativeElement.textContent;
@@ -89,23 +78,6 @@ describe('TaskListComponent', () => {
   });
 
   it('should mark completed task checkbox as checked', () => {
-    component.tasks = [
-      {
-        id: 1,
-        title: 'Estudar TDD',
-        completed: false,
-        createdAt: new Date(),
-        updatedAt: null
-      },
-      {
-        id: 2,
-        title: 'Configurar CI/CD',
-        completed: true,
-        createdAt: new Date(),
-        updatedAt: null
-      }
-    ];
-
     fixture.detectChanges();
 
     const checkboxes = fixture.nativeElement.querySelectorAll('input[type="checkbox"]');
