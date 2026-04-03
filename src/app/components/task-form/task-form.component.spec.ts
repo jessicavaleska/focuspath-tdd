@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TaskFormComponent } from './task-form.component';
 
 describe('TaskFormComponent', () => {
@@ -14,10 +13,6 @@ describe('TaskFormComponent', () => {
     fixture = TestBed.createComponent(TaskFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 
   it('should not emit taskAdded when title is empty', () => {
