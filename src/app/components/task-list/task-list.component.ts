@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,4 +9,10 @@ import { CommonModule } from '@angular/common';
 })
 export class TaskListComponent {
   @Input() tasks: any[] = [];
+  
+  @Output() taskDeleted = new EventEmitter<number>();
+
+  deleteTask(id: number): void {
+    this.taskDeleted.emit(id);
+  }
 }
