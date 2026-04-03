@@ -21,12 +21,20 @@ export class PomodoroTimerService {
     }
 
     if (timeInMs !== undefined) {
+      if (timeInMs <= 0) {
+        return;
+      }
+
       this.initialTime = timeInMs;
       this.remainingTime = timeInMs;
     }
 
     if (this.remainingTime <= 0) {
       this.remainingTime = this.initialTime;
+    }
+
+    if (this.remainingTime <= 0) {
+      return;
     }
 
     this.isRunning = true;
